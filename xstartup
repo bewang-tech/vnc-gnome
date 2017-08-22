@@ -1,0 +1,20 @@
+#!/bin/sh
+
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+
+gsettings set org.gnome.settings-daemon.plugins.sound active false
+gsettings set org.gnome.settings-daemon.plugins.power active false
+gsettings set org.gnome.settings-daemon.plugins.media-keys active false
+gsettings set org.gnome.settings-daemon.plugins.sharing active false
+
+gsettings set org.gnome.desktop.lockdown disable-user-switching true
+gsettings set org.gnome.desktop.lockdown disable-log-out true
+
+# gsettings set org.gnome.desktop.lockdown disable-lock-out true
+# gsettings set org.gnome.desktop.sounds event-sounds false
+
+. /etc/X11/xinit/xinitrc-common
+
+GSESSION="$(type -p gnome-session)"
+exec $SSH_AGENT $GSESSION
